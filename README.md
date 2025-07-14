@@ -89,11 +89,33 @@ at https://github.com/adobe/aem-project-archetype/tree/develop we see
 + release/53 is indicated
     + implying AEM 6.5.17.0+	Java 11	Maven 3.3.9+
 
+```shell
 mvn -B org.apache.maven.plugins:maven-archetype-plugin:3.3.1:generate \
 -D aemVersion=6.5.17 \
 -D archetypeGroupId=com.adobe.aem \
 -D archetypeArtifactId=aem-project-archetype \
--D archetypeVersion=53 \
+-D archetypeVersion=54 \
 -D appTitle="Komatsu Test" \
 -D appId="komatsutest" \
--D groupId="com.bzethmayr.komatsu.test"
+-D groupId="com.bzethmayr.komatsu" \
+-D artifactId="komatsu-test" \
+-D package="com.bzethmayr.komatsu.test" \
+-D version="0.0.1-SNAPSHOT" \
+-D includeDispatcherConfig=n
+```
+```text
+mvn -B org.apache.maven.plugins:maven-archetype-plugin:3.3.1:generate -D aemVersion=6.5.17 -D archetypeGroupId=com.adobe.aem -D archetypeArtifactId=aem-project-archetype -D archetypeVersion=54 -D appTitle="Komatsu Test" -D appId="komatsutest" -D groupId="com.bzethmayr.komatsu" -D artifactId="komatsu-test" -D package="com.bzethmayr.komatsu.test" -D version="0.0.1-SNAPSHOT" -D includeDispatcherConfig=n
+```
+
+## Round 1
+Errors relating to file permissions in Dispatcher config. No dispatcher requirement in exercises, so removing dispatcher config
+
+## Round 2
+It's gone and installed the cloud forms vs local SDK.
+
+## Round 3
+Even if we could get lift from the forms components we'd need to be able to RUN THEM to do so, so... no, removing those
+
+## Round 4
+NPM really cranked the fans for a minute there...
+

@@ -1,0 +1,11 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<workspaceFilter version="1.0">
+    <filter root="/conf/komatsutest" mode="merge"/>
+    <filter root="/content/komatsutest" mode="merge"/>
+    <filter root="/content/dam/komatsutest" mode="merge">
+        <exclude pattern="/content/dam/komatsutest(/.*)?"/>
+        <include pattern="/content/dam/komatsutest/jcr:content(/.*)?"/>
+    </filter>
+    <filter root="/content/dam/komatsutest/asset.jpg" mode="merge"/>
+    <filter root="/content/experience-fragments/komatsutest" mode="merge"/>
+</workspaceFilter>
