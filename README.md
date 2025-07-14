@@ -83,3 +83,17 @@
 
 Not blocked, writing to FileVault structure, but, can't verify anything.
 OKAY - going blind.
+at https://github.com/adobe/aem-project-archetype/tree/develop we see 
+- that the master branch was abandoned three years ago
++ that the release/nn series is still current
++ release/53 is indicated
+    + implying AEM 6.5.17.0+	Java 11	Maven 3.3.9+
+
+mvn -B org.apache.maven.plugins:maven-archetype-plugin:3.3.1:generate \
+-D aemVersion=6.5.17 \
+-D archetypeGroupId=com.adobe.aem \
+-D archetypeArtifactId=aem-project-archetype \
+-D archetypeVersion=53 \
+-D appTitle="Komatsu Test" \
+-D appId="komatsutest" \
+-D groupId="com.bzethmayr.komatsu.test"
