@@ -3,6 +3,8 @@
 
 ## Task 0, added
 1. obtain 6.5 and
+   - "and" is a bit presumptive, as getting this is not easy or quick
+   - apparently some registration process still now at a different site
 2. set up maven to deploy to it
    + will require multiple pom
    + all-in plugin to deploy
@@ -69,3 +71,15 @@
     + This one would generate some ancillary unit tests but have mostly integration tests in fact, as there is frontend behavior of specification
     * Check the generated JaCoCo report to view the test coverage.
     * This report is viewable at `core/target/site/jacoco/index.html`
+
+----
+
++ Maven build indicated
++ we're branching off main
++ AND BLOCKED
+  + Getting hold of that JAR is only for the elect
+
+----
+
+Not blocked, writing to FileVault structure, but, can't verify anything.
+OKAY - going blind.
