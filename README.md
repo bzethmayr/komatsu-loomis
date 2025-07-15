@@ -29,7 +29,16 @@
     + significant mocking is indicated
     * Check the generated JaCoCo report to view the test coverage.
     * This report is viewable at `core/target/site/jacoco/index.html`
- 
+
+```
+This is implemented mostly in komatsu-test/core/src/main/.../core/schedulers/PublishedPageProcessingTask.java
+`com.bzethmayr.komatsu.test.core.schedulers.PublishedPageProcessingTask`
+but also has touches in komatsu-test/ui.config/src/main/.../osgiconfig/config.author
+We could restrict by config presence, but we should not in any case be modifying most content on the publisher,
+so explicit scheduling (or not) is done instead.
+`git diff 4be71508d18852b9322232ddfefd2bee41cfedaa 95aa2abcf18ec85237fa6dbd1281cf9dcb6d2202`
+recovers the changes vs prior state (bare archetype 54)
+```
  
 ## Exercise 2
  
