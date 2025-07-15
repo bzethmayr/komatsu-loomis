@@ -33,7 +33,7 @@ import static org.mockito.Mockito.*;
  * This service will find all pages that have been published and will set a property named processedDate to the current time.
  */
 @ExtendWith(AemContextExtension.class)
-public class PublishedPageProcessingTaskTest {
+class PublishedPageProcessingTaskTest {
 
     private SlingSettingsService settings;
     private Scheduler scheduler;

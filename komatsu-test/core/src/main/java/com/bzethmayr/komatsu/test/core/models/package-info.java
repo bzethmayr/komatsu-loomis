@@ -13,6 +13,9 @@
  *  See the License for the specific language governing permissions and
  *  limitations under the License.
  */
+/**
+ * Considered adding Lombok given lack of record support, but, some getters is okay for now.
+ */
 @Version("1.0")
 package com.bzethmayr.komatsu.test.core.models;
 
