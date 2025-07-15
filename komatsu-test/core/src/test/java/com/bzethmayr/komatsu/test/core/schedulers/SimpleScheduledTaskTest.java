@@ -29,6 +29,7 @@ import uk.org.lidalia.slf4jtest.TestLoggerFactory;
 
 import static org.junit.jupiter.api.Assertions.assertEquals;
 import static org.mockito.Mockito.mock;
+// this mockito version requires a class for mock... and just when I'd stopped providing them
 import static org.mockito.Mockito.when;
 
 @ExtendWith(AemContextExtension.class)
@@ -45,6 +46,9 @@ class SimpleScheduledTaskTest {
 
     @Test
     void run() {
+        // example test misnames the sut as fixture and calls run directly - does not validate cron
+        // no reason it would validate any annotation settings in the process, since direct call
+        // not sufficient unto real concern. logging tends to work.
         SimpleScheduledTask.Config config = mock(SimpleScheduledTask.Config.class);
         when(config.myParameter()).thenReturn("parameter value");
 

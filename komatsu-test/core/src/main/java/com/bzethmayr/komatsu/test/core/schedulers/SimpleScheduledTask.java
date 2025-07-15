@@ -38,6 +38,9 @@ public class SimpleScheduledTask implements Runnable {
 
         @AttributeDefinition(name = "Cron-job expression")
         String scheduler_expression() default "*/30 * * * * ?";
+        // not articulated directly into usage. CoC then, what is it after here...
+        // results in well-known property name "scheduler.expression".
+        // field name form not very clear and breaks JLS conventions
 
         @AttributeDefinition(name = "Concurrent task",
                              description = "Whether or not to schedule this task concurrently")
