@@ -1,0 +1,5 @@
+{
+  "user.mapping": [
+    "komatsu-test.core:post-publish=[komatsutest-post-publish-service]"
+  ]
+}
