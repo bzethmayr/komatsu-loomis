@@ -21,9 +21,9 @@ public class ComponentPreviewUtil {
             .collect(Collectors.joining());
     }
 
-    private static String inMinimalHtmlBody(final String title, final String... bodyParts) {
+    private static String inStyledHtmlBody(final String title, final String headInsert, final String... bodyParts) {
         return inTag("html",
-                inTag("head", inTag("title", title)),
+                inTag("head", inTag("title", title), headInsert),
                 inTag("body", bodyParts)
             );
     }
@@ -44,22 +44,27 @@ public class ComponentPreviewUtil {
      */
     public static String combineInHtml(
             final String title,
+            final String cssBody,
             final String jsBody,
             final String templateBody
     ) {
-        return inMinimalHtmlBody(title,
+        return inStyledHtmlBody(title,
+                inTag("style type=\"txt/css\"", "\n", cssBody, "\n"),
                 "\n", templateBody, "\n",
-                inTag("script type=\"text/javascript\"", "\n", jsBody, "\n"));
+                inTag("script type=\"text/javascript\"", "\n", jsBody, "\n")
+            );
     }
 
     public static String combineInHtml(
             final String title,
+            final Path cssPath,
             final Path jsPath,
             final Path templatePath
     ) {
         try {
             return combineInHtml(
                     title,
+                    Files.readString(cssPath),
                     Files.readString(jsPath),
                     Files.readString(templatePath)
             );
@@ -84,6 +89,8 @@ public class ComponentPreviewUtil {
         }
         return combineInHtml(
                 componentName + " Preview",
+                walker.resolve(Path.of("ui.frontend", "src", "main", "webpack",
+                        "components", "_" + componentName + ".scss")),
                 walker.resolve(Path.of("ui.frontend", "src", "main", "webpack",
                         "components", "_" + componentName + ".js")),
                 walker.resolve(Path.of("ui.apps", "src", "main", "content", "jcr_root",

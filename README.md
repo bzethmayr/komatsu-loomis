@@ -117,7 +117,9 @@ cutting it at component stub (no ajax) and servlet implementation
 ...
 Speculative scope on further branch
 it would be easier in shell, but, if we combine the component template and the JS kinda sloppy-like...
-
+alright. we could now sort-of approach the JS portion
+it wouldn't integrate well with the build, I don't think, at least not yet
+going to stick within the subset and use the css too
 ```
 
 ----
