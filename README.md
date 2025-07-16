@@ -114,6 +114,10 @@ starting from the end
 Mobile distinction is coming in last
 Image? this wanted to display the image for the page. Do all pages have those? :ackbar:
 cutting it at component stub (no ajax) and servlet implementation
+...
+Speculative scope on further branch
+it would be easier in shell, but, if we combine the component template and the JS kinda sloppy-like...
+
 ```
 
 ----
