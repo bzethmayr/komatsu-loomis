@@ -49,7 +49,7 @@ public class ComponentPreviewUtil {
             final String templateBody
     ) {
         return inStyledHtmlBody(title,
-                inTag("style type=\"txt/css\"", "\n", cssBody, "\n"),
+                inTag("style type=\"text/css\"", "\n", cssBody, "\n"),
                 "\n", templateBody, "\n",
                 inTag("script type=\"text/javascript\"", "\n", jsBody, "\n")
             );
