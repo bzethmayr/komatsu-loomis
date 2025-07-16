@@ -89,20 +89,22 @@ Would be better to just expose the model via selector I think, but that way does
 
 ```
 the search may be a servlet? I think it will be.
-the component is seriously looking at getting skipped. along with picking flavor-of-ajax. :ackbar:
+the component is seriously looking at getting skipped. along with picking flavor-of-ajax.
 we have a search implied and we have probably a pojo model implied
 search can signal no results by empty collection, preferably to 404.
 the publish user is specifying the search term, this should not be a selector
 starting from the end
 Mobile distinction is coming in last
-Image? this wanted to display the image for the page. Do all pages have those? :ackbar:
+Image? this wanted to display the image for the page. Do all pages have those? 
 cutting it at component stub (no ajax) and servlet implementation
 ...
-Speculative scope on further branch
+Speculative scope on further branches
 it would be easier in shell, but, if we combine the component template and the JS kinda sloppy-like...
 alright. we could now sort-of approach the JS portion
-it wouldn't integrate well with the build, I don't think, at least not yet
+approach wouldn't integrate well with the build, I don't think, at least not yet
 going to stick within the subset and use the css too
+got the media query sorted
+got the fetch interaction sorted
 ```
 
 ----
