@@ -1,6 +1,7 @@
 package com.bzethmayr.komatsu.test.core.models;
 
 import com.bzethmayr.komatsu.test.core.testcontext.AppAemContext;
+import com.bzethmayr.komatsu.test.core.util.ProfileValueTestHelper;
 import com.day.cq.wcm.api.Page;
 import io.wcm.testing.mock.aem.junit5.AemContext;
 import io.wcm.testing.mock.aem.junit5.AemContextExtension;
@@ -19,7 +20,7 @@ import static com.bzethmayr.komatsu.test.core.models.AlsoByAuthorModel.FIRST_NAM
 import static com.bzethmayr.komatsu.test.core.models.AlsoByAuthorModel.LAST_NAME_PATH;
 import static com.bzethmayr.komatsu.test.core.testcontext.LocalTestingConstants.EXPECTED;
 import static com.bzethmayr.komatsu.test.core.testcontext.LocalTestingConstants.LOCAL_DUMMY_TEMPLATE;
-import static com.bzethmayr.komatsu.test.core.util.ProfileValueTestHelper.setUpHasPropertyValues;
+import static com.bzethmayr.komatsu.test.core.util.ProfileValueTestHelper.*;
 import static com.day.cq.wcm.api.NameConstants.PN_PAGE_LAST_MOD_BY;
 import static java.util.Collections.singletonMap;
 import static org.hamcrest.MatcherAssert.assertThat;
@@ -42,12 +43,9 @@ class AlsoByAuthorModelTest {
 
     @BeforeEach
     void setUpUsers() {
-        // Neither service registration method of context affects adaptTo result, so
-        context.registerAdapter(ResourceResolver.class, UserManager.class,
-                (Function<ResourceResolver, UserManager>) x -> users);
-        assertDoesNotThrow(() -> doReturn(authorUser).when(users).getAuthorizable(expectedUser));
-        assertDoesNotThrow(() -> setUpHasPropertyValues(authorUser, FIRST_NAME_PATH, expectedFirstName));
-        assertDoesNotThrow(() -> setUpHasPropertyValues(authorUser, LAST_NAME_PATH, expectedLastName));
+        setUpUserManager(context, users);
+        setUpFirstAndLastNames(authorUser, expectedFirstName, expectedLastName);
+        setUpGetAuthorizable(users, authorUser, expectedUser);
     }
 
     Page setUpPageExists(final Map<String, Object> properties) {

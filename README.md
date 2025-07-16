@@ -35,6 +35,7 @@
  
 1.  Create a servlet that will output the first and last name of the author who last modified the targeted page.
     + okay, we may need to surface the author more conveniently?
+    + targets pages
     + "first and last name" is satisfied by "whole name" which is one pole of a best-practice debate
     + will let AEM's representation cast the deciding vote.
     + "a servlet" so, this model is not indicated to be adapted from, just constructed
@@ -46,7 +47,7 @@
      + for these to be useful, need to include sufficient to allow link construction, minimum title and path
         + the notion of GraphQL occurs for this to avoid the question
 1.  Based on the extension, the servlet should return the output in either XML or JSON format.
-    + just need to stay out of its way on this
+    + just need to stay out of its way on this - no, we have to do something
 1.  Provide unit tests with at least 80% test coverage.
      + A unit test can indicate whether we're good against our mocks
      + we'd probably want an integration test against our deployed env actually
@@ -61,6 +62,10 @@ We can initially use the Page object model?
 a Sling Model isn't indicated... it would simplify the servlet right out of existence.
 SO... just a pojo? well.. that leaves even more risk surface given no runtime environment. I can verify model resolution.
 So I guess it gets to be a model. I can put POJOs in it if I want?
+
+Well blech. The default get servlet would serialize per extension. But this isn't that. I guess we pull in a mapper?
+Would be better to just expose the model via selector I think, but that way doesn't include a servlet
+
 ```
  
  
