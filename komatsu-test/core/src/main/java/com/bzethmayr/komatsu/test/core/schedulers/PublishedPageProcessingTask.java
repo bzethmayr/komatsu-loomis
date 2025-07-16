@@ -154,6 +154,7 @@ public class PublishedPageProcessingTask implements Runnable {
         notProcessed.set("value", "false");
         neverProcessed.add(notProcessed);
         top.add(neverProcessed);
+
         final Query query = queries.createQuery(top, resolver.adaptTo(Session.class));
         query.setHitsPerPage(-1);
         final SearchResult result = query.getResult();

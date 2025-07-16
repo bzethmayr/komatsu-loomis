@@ -25,7 +25,7 @@
    + "have been" is loosely bound - binding newer end to current time, and older end to where?
    + older end could be the last run?
    + however, the more correct condition would be any pages whose publish date exceeds their processedDate, since not all runs will necessarily occur / complete.
-4.  Provide unit tests with at least 80% test coverage.
+3.  Provide unit tests with at least 80% test coverage.
     + significant mocking is indicated
     * Check the generated JaCoCo report to view the test coverage.
     * This report is viewable at `core/target/site/jacoco/index.html`
@@ -44,18 +44,38 @@ recovers the changes vs prior state (bare archetype 54)
  
 1.  Create a servlet that will output the first and last name of the author who last modified the targeted page.
     + okay, we may need to surface the author more conveniently?
-3.  It will also contain a list of any child pages that were also modified by this user.
-     + children of this page, this could be done by walk or by search. BETTER TO SEARCH, walk not being able to take advantage of indices
-     + also modified ever, or also last modified by? stated as "also modified ever". would probably rather be "last modified by"
+    + targets pages
+    + "first and last name" is satisfied by "whole name" which is one pole of a best-practice debate
+    + will let AEM's representation cast the deciding vote.
+    + "a servlet" so, this model is not indicated to be adapted from, just constructed
+1.  It will also contain a list of any child pages that were also modified by this user.
+     + children of this page, this could be done by walk or by search.
+     + BETTER TO SEARCH, walk not being able to take advantage of indices
+     + also modified ever, or also last modified by? stated as "also modified (ever)". would probably rather be "last modified by"
          - at slight risk, going to treat as "last modified by"
-5.  Based on the extension, the servlet should return the output in either XML or JSON format.
-    + just need to stay out of its way on this
-6.  Provide unit tests with at least 80% test coverage.
+     + for these to be useful, need to include sufficient to allow link construction, minimum title and path
+        + the notion of GraphQL occurs for this to avoid the question
+1.  Based on the extension, the servlet should return the output in either XML or JSON format.
+    + just need to stay out of its way on this - no, we have to do something
+1.  Provide unit tests with at least 80% test coverage.
      + A unit test can indicate whether we're good against our mocks
      + we'd probably want an integration test against our deployed env actually
      + We can kick those after the deploy in the Integration Test phase, oldschool
-    * Check the generated JaCoCo report to view the test coverage.
-    * This report is viewable at `core/target/site/jacoco/index.html`
+     * Check the generated JaCoCo report to view the test coverage.
+     * This report is viewable at `core/target/site/jacoco/index.html`
+
+```
+This is going to target cq:Page jcr:content cq:lastModifiedBy since that is where author edits qua author edits persist,
+the jcr:lastModifiedBy property could well reflect a non-author action.
+We can initially use the Page object model?
+a Sling Model isn't indicated... it would simplify the servlet right out of existence.
+SO... just a pojo? well.. that leaves even more risk surface given no runtime environment. I can verify model resolution.
+So I guess it gets to be a model. I can put POJOs in it if I want?
+
+Well blech. The default get servlet would serialize per extension. But this isn't that. I guess we pull in a mapper?
+Would be better to just expose the model via selector I think, but that way doesn't include a servlet
+
+```
  
  
 ## Exercise 3
