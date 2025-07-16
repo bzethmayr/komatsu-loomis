@@ -1,23 +1,6 @@
 # komatsu-loomis
 3 exercises for fullstack AEM role
 
-## Task 0, added
-1. obtain 6.5 and
-   - "and" is a bit presumptive, as getting this is not easy or quick
-   - apparently some registration process still now at a different site
-2. set up maven to deploy to it
-   + will require multiple pom
-   + all-in plugin to deploy
-   - Jenkins is out-of-scope.
-3. First two are in OSGi bundle
-   - using 0.0-SNAPSHOT
-   - will want v Sling libs
-   - will want Mockito, hopefully not need PowerMockito...
-   - okay vs Maven Central I bet
-4. Last is in JCR package
-5. An integration test is indicated
-6. A front-end build is indicated
-
 ## Exercise 1
  
 1.  Create a service that will run once every 2 minutes and only on the author environment.
@@ -168,9 +151,4 @@ Even if we could get lift from the forms components we'd need to be able to RUN 
 
 ## Round 4
 NPM really cranked the fans for a minute there...
-
-----
-
-Archetype gave us a lot more than we really wanted.
-Maybe less too, we'll find out.
 
