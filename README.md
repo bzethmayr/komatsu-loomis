@@ -82,24 +82,39 @@ Would be better to just expose the model via selector I think, but that way does
  
 1.  Create a component that contains a form with a text input and a submit button.
     * "contains a form"
-3.  The label for the input and the text of the submit button must be authorable.
-4.  On desktop, the component should have a light grey background and black text.
-     + this is a CSS query thing?
-5.  On mobile, the component should have a black background with white text.
+1.  The label for the input and the text of the submit button must be authorable.
+    + `inputLabel`, `submitText`
+1.  On desktop, the component should have a light grey background and black text.
+    + this is a CSS query thing?
+1.  On mobile, the component should have a black background with white text.
      + this is a CSS query thing?
         - Is it really? we're not given a width cutoff.
         - wider than tall vs taller than wide could confuse a vertical monitor.
         - Can we... trust the client metadata like a simp?
             + well, we can try
-7.  When the submit button is click, the component should display the title, description, image, and last modified date for each page whose title or description contain the text from the input field.
+1.  When the submit button is click, the component should 
+    display the title, description, image, and last modified date 
+    for each page whose title or description contain the text from the input field.
      - sounds like a dynamic action because components don't get to call for page refreshes.
      - but this one contains a form. In a legacy case that could indicate that the form actually does get submitted.
-9.  If no pages are returned, it should instead display text alerting the user that their term returned zero results.
+1.  If no pages are returned, it should instead display text alerting the user that their term returned zero results.
     + "(alert sign) Your term returned zero results" I guess. Editability not indicated.
-11.  Provide unit tests with at least 80% test coverage.
+1.  Provide unit tests with at least 80% test coverage.
     + This one would generate some ancillary unit tests but have mostly integration tests in fact, as there is frontend behavior of specification
     * Check the generated JaCoCo report to view the test coverage.
     * This report is viewable at `core/target/site/jacoco/index.html`
+
+```
+the search may be a servlet? I think it will be.
+the component is seriously looking at getting skipped. along with picking flavor-of-ajax. :ackbar:
+we have a search implied and we have probably a pojo model implied
+search can signal no results by empty collection, preferably to 404.
+the publish user is specifying the search term, this should not be a selector
+starting from the end
+Mobile distinction is coming in last
+Image? this wanted to display the image for the page. Do all pages have those? :ackbar:
+cutting it at component stub (no ajax) and servlet implementation
+```
 
 ----
 

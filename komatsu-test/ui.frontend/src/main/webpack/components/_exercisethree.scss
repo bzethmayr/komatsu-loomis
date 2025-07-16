@@ -1,0 +1,10 @@
+// Best practice:
+// For a good separation of concerns, don't rely on the DOM element names,
+// but on dedicated CSS selectors to identify all elements
+.cmp-exercisethree {}
+.cmp-exercisethree__input-label {
+    margin-bottom: 0;
+}
+.cmp-exercisethree__input {}
+.cmp-exercisethree__submit-button {}
+.cmp-exercisethree__output {}
