@@ -10,6 +10,7 @@
     // interact with.
     var selectors = {
         self:      '[data-cmp-is="exercisethree"]',
+        form: '[data-cmp-hook-exercisethree="form"]',
         input:  '[data-cmp-hook-exercisethree="input"]',
         submit: '[data-cmp-hook-exercisethree="submit"]',
         output: '[data-cmp-hook-exercisethree="output"]'
@@ -17,29 +18,70 @@
 
     function exercisethree(config) {
 
+        function findOnlyChild(root, selector) {
+            var children = config.element.querySelectorAll(selector);
+            return children.length == 1 ? children[0] : null;
+        }
+
         function init(config) {
             // Best practice:
             // To prevents multiple initialization, remove the main data attribute that
             // identified the component.
             config.element.removeAttribute("data-cmp-is");
 
-            var input = config.element.querySelectorAll(selectors.input);
-            input = input.length == 1 ? input[0] : null;
-
-            var submit = config.element.querySelectorAll(selectors.submit);
-            submit = submit.length == 1 ? submit[0] : null;
-
-            var output = config.element.querySelectorAll(selectors.output);
-            output = output.length == 1 ? output[0] : null;
+            var form = findOnlyChild(config.element, selectors.form);
+            var input = findOnlyChild(config.element, selectors.input);
+            var submit = findOnlyChild(config.element, selectors.submit);
+            var output = findOnlyChild(config.element, selectors.output);
 
             if (console && console.log) {
                 console.log(
                     "exercisethree component JavaScript debugging",
-                    "\nInput:\n", input,
+                    "\nForm is\n", form,
+                    "\nInput is\n", input,
                     "\nSubmit:\n", submit,
                     "\nOutput:\n", output
                 );
             }
+                form.addEventListener("submit", (event) => {
+                    event.preventDefault();
+                    fetch("/exercisethree.json?" + new URLSearchParams("searchTerm", input.value))
+                        .then(response => response.json())
+                        .then(json => {
+                            console.log(JSON.stringify(json));
+                            if (json.length) {
+                                output.innerHTML = "";
+                                var descriptions = document.createElement("ul");
+                                json.forEach(found => {
+                                    var item = document.createElement("li");
+                                    var itemDl = document.createElement("dl");
+                                    var titleDt = document.createElement("dt");
+                                    titleDt.append("title");
+                                    var titleDd = document.createElement("dd");
+                                    titleDd.append(found.title);
+                                    itemDl.append(titleDt);
+                                    itemDl.append(titleDd);
+                                    var descriptionDt = document.createElement("dt");
+                                    descriptionDt.append("description");
+                                    var descriptionDd = document.createElement("dd");
+                                    descriptionDd.append(found.description);
+                                    itemDl.append(descriptionDt);
+                                    itemDl.append(descriptionDd);
+                                    var modifiedDt = document.createElement("dt");
+                                    modifiedDt.append("last modified");
+                                    var modifiedDd = document.createElement("dd");
+                                    modifiedDd.append(found.lastModified);
+                                    itemDl.append(modifiedDt);
+                                    itemDl.append(modifiedDd);
+                                    item.append(itemDl);
+                                    descriptions.append(item);
+                                });
+                                output.append(descriptions);
+                            } else {
+                                output.innerHTML = "⚠ Your term returned zero results";
+                            }
+                        });
+                });
         }
 
         if (config && config.element) {

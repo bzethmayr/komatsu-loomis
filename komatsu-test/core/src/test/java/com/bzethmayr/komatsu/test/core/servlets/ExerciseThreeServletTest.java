@@ -65,7 +65,8 @@ public class ExerciseThreeServletTest {
         assertDoesNotThrow(() -> underTest.doGet(request, response));
 
         assertThat(response.getStatus(), is(200));
-        assertThat(response.getOutputAsString(), allOf(
+        final String output = response.getOutputAsString();
+        assertThat(output, allOf(
                 startsWith("["),
                 containsString(expectedTitle),
                 containsString(expectedDescription),
