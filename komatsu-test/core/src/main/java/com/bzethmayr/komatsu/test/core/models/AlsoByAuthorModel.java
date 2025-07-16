@@ -43,8 +43,6 @@ public class AlsoByAuthorModel {
 
     @PostConstruct
     protected void init() throws RepositoryException {
-        final PageManager pageManager = resourceResolver.adaptTo(PageManager.class);
-
         // path is independently needed
         final PageManager pages = resourceResolver.adaptTo(PageManager.class);
         final Page containingPage = Optional.ofNullable(pages)

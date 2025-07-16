@@ -4,16 +4,20 @@ import com.day.cq.search.Query;
 import com.day.cq.search.QueryBuilder;
 import com.day.cq.search.result.Hit;
 import com.day.cq.search.result.SearchResult;
+import com.day.cq.wcm.api.Page;
+import com.day.cq.wcm.api.PageManager;
 import io.wcm.testing.mock.aem.junit5.AemContext;
 import org.apache.sling.api.resource.ModifiableValueMap;
 import org.apache.sling.api.resource.Resource;
 import org.apache.sling.api.resource.ResourceResolver;
 
-import java.util.ArrayList;
-import java.util.List;
+import java.util.*;
 import java.util.function.Function;
 import java.util.stream.IntStream;
 
+import static com.bzethmayr.komatsu.test.core.testcontext.LocalTestingConstants.LOCAL_DUMMY_TEMPLATE;
+import static com.day.cq.wcm.api.NameConstants.PN_DESCRIPTION;
+import static com.day.cq.wcm.api.NameConstants.PN_TITLE;
 import static org.junit.jupiter.api.Assertions.assertDoesNotThrow;
 import static org.mockito.ArgumentMatchers.any;
 import static org.mockito.Mockito.doReturn;
@@ -35,6 +39,10 @@ public final class QueryBuilderTestHelper {
         return fakeResult;
     }
 
+    private static String hitPath(final String root, final int index) {
+        return root + "/hit/" + index;
+    }
+
     public static void setUpSomeHits(final SearchResult result, final String root, final int count) {
         final List<Hit> hits = new ArrayList<>(count);
         IntStream.range(0, count).forEach(x -> {
@@ -48,10 +56,19 @@ public final class QueryBuilderTestHelper {
             assertDoesNotThrow(() ->
                     doReturn("" + x).when(hit).getTitle());
             assertDoesNotThrow(() ->
-                    doReturn(root + "/hit/" + x).when(hit).getPath());
+                    doReturn(hitPath(root, x)).when(hit).getPath());
             doReturn(values).when(contentResource).adaptTo(ModifiableValueMap.class);
             hits.add(hit);
         });
         doReturn(hits).when(result).getHits();
+    }
+
+    public static void setUpHitPages(final AemContext context, final String root, final int count) {
+        IntStream.range(0, count).forEach(x -> {
+            context.create().page(hitPath(root, x), LOCAL_DUMMY_TEMPLATE, Map.of(
+                    PN_TITLE, "title " + x,
+                    PN_DESCRIPTION, "description " + x
+            ));
+        });
     }
 }
