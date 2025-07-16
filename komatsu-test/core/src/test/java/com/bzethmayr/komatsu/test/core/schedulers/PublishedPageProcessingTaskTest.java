@@ -21,6 +21,7 @@ import java.util.List;
 import java.util.stream.IntStream;
 
 import static com.bzethmayr.komatsu.test.core.schedulers.PublishedPageProcessingTask.*;
+import static com.bzethmayr.komatsu.test.core.util.QueryBuilderTestHelper.setUpSomeHits;
 import static java.util.Collections.singleton;
 import static org.hamcrest.MatcherAssert.assertThat;
 import static org.hamcrest.Matchers.is;
@@ -193,19 +194,7 @@ class PublishedPageProcessingTaskTest {
 
     final void setUpAdaptableResults(final Query query, final int count) {
         final SearchResult result = mock(SearchResult.class);
-        final List<Hit> hits = new ArrayList<>(count);
-        IntStream.range(0, count).forEach(x -> {
-            final ModifiableValueMap values = mock(ModifiableValueMap.class);
-            final Resource contentResource = mock(Resource.class);
-            final Resource hitResource = mock(Resource.class);
-            final Hit hit = mock(Hit.class);
-            assertDoesNotThrow(() ->
-                    doReturn(hitResource).when(hit).getResource());
-            doReturn(contentResource).when(hitResource).getChild("jcr:content");
-            doReturn(values).when(contentResource).adaptTo(ModifiableValueMap.class);
-            hits.add(hit);
-        });
-        doReturn(hits).when(result).getHits();
+        setUpSomeHits(result, "/content", count);
         doReturn(result).when(query).getResult();
     }
 

@@ -1,5 +1,11 @@
 package com.bzethmayr.komatsu.test.core.models;
 
+import com.day.cq.search.Predicate;
+import com.day.cq.search.PredicateGroup;
+import com.day.cq.search.Query;
+import com.day.cq.search.QueryBuilder;
+import com.day.cq.search.result.Hit;
+import com.day.cq.search.result.SearchResult;
 import com.day.cq.wcm.api.Page;
 import com.day.cq.wcm.api.PageManager;
 import org.apache.jackrabbit.api.security.user.User;
@@ -11,8 +17,12 @@ import org.apache.sling.models.annotations.injectorspecific.SlingObject;
 
 import javax.annotation.PostConstruct;
 import javax.jcr.RepositoryException;
+import javax.jcr.Session;
+import java.util.Collections;
 import java.util.List;
+import java.util.Objects;
 import java.util.Optional;
+import java.util.stream.Collectors;
 
 import static com.bzethmayr.komatsu.test.core.util.ProfileValueHelper.firstStringOrBlank;
 
@@ -57,6 +67,46 @@ public class AlsoByAuthorModel {
                    firstStringOrBlank(authorUser, FIRST_NAME_PATH),
                    firstStringOrBlank(authorUser, LAST_NAME_PATH)
             );
+            alsoBy = Collections.unmodifiableList(findAlsoBy(resourceResolver, authorUsername, pagePath));
+        }
+    }
+
+    private List<LinkPojo> findAlsoBy(final ResourceResolver resolver, final String authorUserName, final String pagePath) {
+        final PredicateGroup sole = new PredicateGroup();
+        final Predicate isChild = new Predicate("path");
+        isChild.set("path", pagePath);
+        sole.add(isChild);
+        final Predicate isPage = new Predicate("type");
+        isPage.set("type", "cq:Page");
+        sole.add(isPage);
+        final Predicate wasModifiedBy = new Predicate("property");
+        wasModifiedBy.set("property", "jcr:content/cq:lastModifiedBy");
+        wasModifiedBy.set("value", authorUserName);
+        sole.add(wasModifiedBy);
+
+        final QueryBuilder queries = resolver.adaptTo(QueryBuilder.class);
+        final Query query = queries.createQuery(sole, resourceResolver.adaptTo(Session.class));
+        query.setHitsPerPage(10);
+        final SearchResult result = query.getResult();
+
+        return result.getHits().stream()
+                .map(h -> pojoFromHit(h, pagePath))
+                .filter(Objects::nonNull)
+                .collect(Collectors.toList());
+    }
+
+    private LinkPojo pojoFromHit(final Hit hit, final String prefixPath) {
+        try {
+            return new LinkPojo(
+                    Optional.ofNullable(hit.getTitle())
+                            .orElse(""),
+                    Optional.ofNullable(hit.getPath())
+                            .map(s -> s.substring(prefixPath.length() +
+                                    (prefixPath.endsWith("/") ? 0 : 1)))
+                            .orElse("")
+            );
+        } catch (final RepositoryException e) {
+            return null;
         }
     }
 
