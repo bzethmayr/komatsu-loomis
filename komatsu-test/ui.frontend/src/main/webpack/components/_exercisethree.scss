@@ -1,7 +1,14 @@
-// Best practice:
-// For a good separation of concerns, don't rely on the DOM element names,
-// but on dedicated CSS selectors to identify all elements
-.cmp-exercisethree {}
+.cmp-exercisethree {
+@media (max-width: 957px) {
+      background-color: black;
+      color: white;
+}
+@media (min-width: 958px) {
+       background-color: #eee;
+       color: black;
+       }
+ }
+
 .cmp-exercisethree__input-label {
     margin-bottom: 0;
 }
