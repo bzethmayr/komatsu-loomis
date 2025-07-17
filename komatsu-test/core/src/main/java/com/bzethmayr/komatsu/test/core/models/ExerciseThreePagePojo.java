@@ -5,11 +5,11 @@ import java.util.Date;
 public class ExerciseThreePagePojo {
     private final String title;
     private final String description;
-    private final String image;
+    private final ImagePojo image;
     private final Date lastModified;
 
     public ExerciseThreePagePojo(
-            final String title, final String description, final String image, final Date lastModified
+            final String title, final String description, final ImagePojo image, final Date lastModified
     ) {
         this.title = title;
         this.description = description;
@@ -25,7 +25,7 @@ public class ExerciseThreePagePojo {
         return description;
     }
 
-    public String getImage() {
+    public ImagePojo getImage() {
         return image;
     }
 

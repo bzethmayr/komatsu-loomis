@@ -1,6 +1,15 @@
 [ {
   "title" : "title 0",
   "description" : "description 0",
-  "image" : "",
-  "lastModified" : null
+  "image" : {
+    "src" : "/content/dam/komatsutest/asset.jpg/cq5dam.thumbnail.48.48.png",
+    "srcset" : null,
+    "lazyEnabled" : false,
+    "width" : "48",
+    "height" : "48",
+    "sizes" : null,
+    "alt" : "true",
+    "title" : ""
+  },
+  "lastModified" : 1752715726047
 } ]

@@ -23,6 +23,15 @@
             return children.length == 1 ? children[0] : null;
         }
 
+        function appendDdt(dl, term, definition) {
+            var dt = document.createElement("dt");
+            dt.append(term);
+            var dd = document.createElement("dd");
+            dd.append(definition);
+            dl.append(dt);
+            dl.append(dd);
+        }
+
         function init(config) {
             // Best practice:
             // To prevents multiple initialization, remove the main data attribute that
@@ -51,32 +60,29 @@
                             console.log(JSON.stringify(json));
                             if (json.length) {
                                 output.innerHTML = "";
-                                var descriptions = document.createElement("ul");
+                                var listing = document.createElement("ul");
                                 json.forEach(found => {
                                     var item = document.createElement("li");
                                     var itemDl = document.createElement("dl");
-                                    var titleDt = document.createElement("dt");
-                                    titleDt.append("title");
-                                    var titleDd = document.createElement("dd");
-                                    titleDd.append(found.title);
-                                    itemDl.append(titleDt);
-                                    itemDl.append(titleDd);
-                                    var descriptionDt = document.createElement("dt");
-                                    descriptionDt.append("description");
-                                    var descriptionDd = document.createElement("dd");
-                                    descriptionDd.append(found.description);
-                                    itemDl.append(descriptionDt);
-                                    itemDl.append(descriptionDd);
-                                    var modifiedDt = document.createElement("dt");
-                                    modifiedDt.append("last modified");
-                                    var modifiedDd = document.createElement("dd");
-                                    modifiedDd.append(found.lastModified);
-                                    itemDl.append(modifiedDt);
-                                    itemDl.append(modifiedDd);
+                                    appendDdt(itemDl, "title", found.title);
+                                    appendDdt(itemDl, "description", found.description);
+                                    appendDdt(itemDl, "last modified", found.lastModified);
                                     item.append(itemDl);
-                                    descriptions.append(item);
+                                    if (found.image && found.image.src) {
+                                        var image = document.createElement("img");
+                                        image.src = found.image.src;
+                                        if (found.image.srcset) image.srcset = found.image.srcset;
+                                        if (found.lazyLoading) image.loading = lazy;
+                                        if (found.image.width) image.width = found.image.width;
+                                        if (found.image.height) image.height = found.image.height;
+                                        if (found.image.sizes) image.sizes = found.image.sizes;
+                                        image.alt = found.image.alt;
+                                        if (found.image.title) image.title = found.image.title;
+                                        item.append(image);
+                                    }
+                                    listing.append(item);
                                 });
-                                output.append(descriptions);
+                                output.append(listing);
                             } else {
                                 output.innerHTML = "⚠ Your term returned zero results";
                             }
