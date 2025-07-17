@@ -57,6 +57,7 @@ So I guess it gets to be a model. I can put POJOs in it if I want?
 
 Well blech. The default get servlet would serialize per extension. But this isn't that. I guess we pull in a mapper?
 Would be better to just expose the model via selector I think, but that way doesn't include a servlet
+branch was `exercise-2`
 
 ```
  
@@ -97,6 +98,7 @@ starting from the end
 Mobile distinction is coming in last
 Image? this wanted to display the image for the page. Do all pages have those? 
 cutting it at component stub (no ajax) and servlet implementation
+branch was exercise-3
 ...
 Speculative scope on further branches
 it would be easier in shell, but, if we combine the component template and the JS kinda sloppy-like...
@@ -105,6 +107,7 @@ approach wouldn't integrate well with the build, I don't think, at least not yet
 going to stick within the subset and use the css too
 got the media query sorted
 got the fetch interaction sorted
+`git diff 05bac101d32bdb3534af6ba3266cac47cb667650` should recover all of this
 ```
 
 ----
