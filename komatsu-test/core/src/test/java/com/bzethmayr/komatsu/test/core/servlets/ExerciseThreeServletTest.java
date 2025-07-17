@@ -3,7 +3,6 @@ package com.bzethmayr.komatsu.test.core.servlets;
 import com.bzethmayr.komatsu.test.core.testcontext.AppAemContext;
 import com.day.cq.search.QueryBuilder;
 import com.day.cq.search.result.SearchResult;
-import com.day.cq.wcm.api.PageManager;
 import io.wcm.testing.mock.aem.junit5.AemContext;
 import io.wcm.testing.mock.aem.junit5.AemContextExtension;
 import org.apache.sling.testing.mock.sling.servlet.MockSlingHttpServletRequest;
@@ -12,6 +11,8 @@ import org.junit.jupiter.api.Test;
 import org.junit.jupiter.api.extension.ExtendWith;
 
 import static com.bzethmayr.komatsu.test.core.testcontext.LocalTestingConstants.EXPECTED;
+import static com.bzethmayr.komatsu.test.core.util.PageImageTestHelper.setUpImageAdapter;
+import static com.bzethmayr.komatsu.test.core.util.PageImageTestHelper.setUpPageImage;
 import static com.bzethmayr.komatsu.test.core.util.QueryBuilderTestHelper.*;
 import static org.hamcrest.MatcherAssert.assertThat;
 import static org.hamcrest.Matchers.*;
@@ -73,4 +74,29 @@ public class ExerciseThreeServletTest {
                 endsWith("]")
         ));
     }
+
+    @Test
+    void doGet_whenSearchTextFindsPageWithImage_returnsPopulatedList() {
+        final SearchResult result = setUpQueryBuilder(context, queries);
+        setUpSomeHits(result, "/content", 1);
+        setUpHitPages(context,"/content", 1);
+        setUpPageImage(context, "/content/hit/0");
+        setUpImageAdapter(context);
+        context.request().addRequestParameter("searchText", EXPECTED);
+        MockSlingHttpServletRequest request = context.request();
+        MockSlingHttpServletResponse response = context.response();
+
+        assertDoesNotThrow(() -> underTest.doGet(request, response));
+
+        assertThat(response.getStatus(), is(200));
+        final String output = response.getOutputAsString();
+        assertThat(output, allOf(
+                startsWith("["),
+                containsString("thumbnail"),
+                containsString(expectedTitle),
+                containsString(expectedDescription),
+                endsWith("]")
+        ));
+    }
+
 }

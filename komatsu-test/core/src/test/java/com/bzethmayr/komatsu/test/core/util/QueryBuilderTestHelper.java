@@ -16,8 +16,7 @@ import java.util.function.Function;
 import java.util.stream.IntStream;
 
 import static com.bzethmayr.komatsu.test.core.testcontext.LocalTestingConstants.LOCAL_DUMMY_TEMPLATE;
-import static com.day.cq.wcm.api.NameConstants.PN_DESCRIPTION;
-import static com.day.cq.wcm.api.NameConstants.PN_TITLE;
+import static com.day.cq.wcm.api.NameConstants.*;
 import static org.junit.jupiter.api.Assertions.assertDoesNotThrow;
 import static org.mockito.ArgumentMatchers.any;
 import static org.mockito.Mockito.doReturn;
@@ -67,7 +66,8 @@ public final class QueryBuilderTestHelper {
         IntStream.range(0, count).forEach(x -> {
             context.create().page(hitPath(root, x), LOCAL_DUMMY_TEMPLATE, Map.of(
                     PN_TITLE, "title " + x,
-                    PN_DESCRIPTION, "description " + x
+                    PN_DESCRIPTION, "description " + x,
+                    PN_PAGE_LAST_MOD, Calendar.getInstance()
             ));
         });
     }

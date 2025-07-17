@@ -27,6 +27,8 @@ import java.util.Objects;
 import java.util.Optional;
 import java.util.stream.Collectors;
 
+import static com.bzethmayr.komatsu.test.core.util.PageImageHelper.resolvePageImage;
+
 @Component(service = Servlet.class)
 @SlingServletPaths(
         value = "/exercisethree.json"
@@ -75,21 +77,21 @@ public class ExerciseThreeServlet extends SlingSafeMethodsServlet {
         query.setHitsPerPage(-1); // it did say all. however, pagination could be a better idea.
         final SearchResult result = query.getResult();
 
-        final PageManager pages = resolver.adaptTo(PageManager.class);
         return result.getHits().stream()
-                .map(h -> pagePojoFromHit(h, pages))
+                .map(h -> pagePojoFromHit(h, resolver))
                 .filter(Objects::nonNull)
                 .collect(Collectors.toList());
     }
 
-    private ExerciseThreePagePojo pagePojoFromHit(final Hit hit, final PageManager pages) {
+    private ExerciseThreePagePojo pagePojoFromHit(final Hit hit, final ResourceResolver resolver) {
+        final PageManager pages = resolver.adaptTo(PageManager.class);
         try {
             final Page page = pages.getPage(hit.getPath());
             if (page != null) {
                 return new ExerciseThreePagePojo(
                         page.getTitle(),
                         page.getDescription(),
-                        "",
+                        resolvePageImage(resolver, page),
                         Optional.ofNullable(page.getLastModified())
                                 .map(Calendar::getTime)
                                 .orElse(null)
